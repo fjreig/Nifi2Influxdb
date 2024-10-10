@@ -1,0 +1,22 @@
+services:
+  nifi:
+    container_name: nifi
+    image: apache/nifi:latest
+    ports:
+      - 8443:8443
+      - 8088:8081
+    env_file:
+      - .env
+
+  influxdb:
+    container_name: influx
+    image: influxdb:2
+    ports:
+      - 8086:8086
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_ADMIN_TOKEN}
